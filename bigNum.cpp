@@ -1,7 +1,13 @@
 #include <iostream>
+#include <cstring>
 #include "bigNum.h"
 
 using namespace std;
+
+BigNum::BigNum() {
+    memset(num, 0, MAX_LEN);
+    len = 0;
+}
 
 BigNum::BigNum(int n) {
     if (n < 0) {
@@ -47,17 +53,42 @@ void BigNum::print() {
     }
 }
 
+BigNum BigNum::operator+(const BigNum& n){
+    int carry = 0;
+    int i = 0;
+    BigNum res = BigNum();
+    for (; i < len && i < n.len; ++i) {
+        int sum = num[i] + n.num[i] + carry;
+        int carry = sum / 10;
+        res.num[i] = sum % 10;
+    }
+    for (; i < len; ++i) {
+        int sum = num[i] + carry;
+        int carry = sum / 10;
+        res.num[i] = sum % 10;
+    }
+    for (; i < n.len; ++i) {
+        int sum = n.num[i] + carry;
+        int carry = sum / 10;
+        res.num[i] = sum % 10;
+    }
+    res.len = i;
+    return res;
+}
 
 int main() {
     BigNum num1(1111335);
-    num1.print();
+    // num1.print();
 
-    BigNum num2(-13555555);
-    num2.print();
+    // BigNum num2(-13555555);
+    // num2.print();
 
     BigNum num3("32948094535447054");
-    num3.print();
+    // num3.print();
 
-    BigNum num4("11r11111111555555");
-    num4.print();
+    // BigNum num4("11r11111111555555");
+    // num4.print();
+
+    BigNum num5 = BigNum(num1 + num3);
+    num5.print();
 }

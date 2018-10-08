@@ -1,11 +1,17 @@
 #include <iostream>
-#define MAX_LEN 100
+#define MAX_LEN 1000
 using namespace std;
 
 class BigNum {
 public:
+    BigNum();
     BigNum(int n);
     BigNum(const string n);
+
+    virtual ~BigNum() {};
+
+    BigNum operator+(const BigNum& n);
+
     void print();
 
 private:
