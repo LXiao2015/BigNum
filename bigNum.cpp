@@ -17,7 +17,7 @@ BigNum::BigNum(int n) {
     }
     int base = 10;
     int i = 0;
-    while (n % base) {
+    while (n) {
         num[i++] = n % base;
         n = n / base;
     }
@@ -74,6 +74,11 @@ BigNum BigNum::operator+(const BigNum& n){
     }
     res.len = i;
     return res;
+}
+
+BigNum BigNum::operator+(const int &n) {
+    BigNum t(n);
+    return *this + t;
 }
 
 bool BigNum::operator==(const BigNum& n) {
@@ -142,7 +147,39 @@ bool BigNum::operator>(const int &n) {
 }
 
 BigNum BigNum::operator-(const BigNum& n) {
-    
+    BigNum res = BigNum();
+    if (*this < n) {
+        cout << "Error: left operand is smaller than right operand!" << endl;
+        res.len = -1;
+        return res;
+    }
+    int sub = 0;
+    int i = 0;
+    for (; i < n.len; ++i) {
+	if (num[i] + sub < n.num[i]) {
+            res.num[i] = 10 + num[i] - n.num[i] + sub;
+            sub = -1;
+        }
+	else {
+	    res.num[i] = num[i] - n.num[i] + sub;
+            sub = 0;
+        }
+    }
+    for (; i < len; ++i) {
+        if (num[i] + sub < 0) {
+            res.num[i] = 10 + num[i] + sub;
+            sub = -1;
+        }
+        else {
+            res.num[i] = num[i] + sub;
+            sub = 0;
+        }
+    }
+    res.len = i;
+    while (res.len > 1 && res.num[res.len - 1] == 0) {    // 结果为零时, 需保留一个零
+        res.len--;
+    }
+    return res;
 }
 
 BigNum BigNum::operator*(const BigNum& n) {
@@ -158,17 +195,20 @@ int main() {
     BigNum num1(1111335);
     num1.print();
 
-    BigNum num2(1111335);
-    num2.print();
+    // BigNum num2(1111335);
+    // num2.print();
 
-    BigNum num3("32948094535447054");
+    BigNum num3(1111000);
     num3.print();
 
     // BigNum num4("11r11111111555555");
     // num4.print();
     cout << endl;
-    cout << (num1 < 11111111) << endl;
-    cout << (num3 < 11111111) << endl;
-    // BigNum num5 = BigNum(num1 + num3);
-    // num5.print();
+    // cout << (num1 < 11111111) << endl;
+    // cout << (num3 < 11111111) << endl;
+    BigNum num5 = BigNum(num1 - num3);
+    BigNum num6 = BigNum(num3 - num1);
+    num5.print();
+    cout << endl;
+    num6.print();
 }

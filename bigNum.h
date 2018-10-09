@@ -18,6 +18,7 @@ public:
     bool operator<(const int &n);
 
     BigNum operator+(const BigNum& n);
+    BigNum operator+(const int &n);
     BigNum operator-(const BigNum& n);
     BigNum operator*(const BigNum& n);
     BigNum operator/(const BigNum& n);
