@@ -10,7 +10,17 @@ public:
 
     virtual ~BigNum() {};
 
+    bool operator==(const BigNum& n);
+    bool operator==(const int &n);
+    bool operator>(const BigNum& n);
+    bool operator>(const int &n);
+    bool operator<(const BigNum& n);
+    bool operator<(const int &n);
+
     BigNum operator+(const BigNum& n);
+    BigNum operator-(const BigNum& n);
+    BigNum operator*(const BigNum& n);
+    BigNum operator/(const BigNum& n);
 
     void print();
 

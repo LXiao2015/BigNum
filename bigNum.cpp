@@ -76,19 +76,99 @@ BigNum BigNum::operator+(const BigNum& n){
     return res;
 }
 
+bool BigNum::operator==(const BigNum& n) {
+    if (len != n.len) {
+	return false;
+    }
+    for (int i = 0; i < len; ++i) {
+        if (num[i] != n.num[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool BigNum::operator==(const int& n) {
+    BigNum t(n);
+    return (*this == t);
+}
+
+bool BigNum::operator<(const BigNum& n) {
+    bool equal = true;
+    if (len < n.len) {
+	return true;
+    }
+    if (len > n.len) {
+        return false;
+    }
+    for (int i = 0; i < len; ++i) {
+        if (num[i] > n.num[i]) {
+            return false;
+        }
+        if (equal && num[i] < n.num[i]) {
+	    equal = false;
+        }
+    }
+    return !equal;
+}
+
+bool BigNum::operator<(const int &n) {
+    BigNum t(n);
+    return (*this < t);
+}
+
+bool BigNum::operator>(const BigNum& n) {
+    bool equal = true;
+    if (len > n.len) {
+        return true;
+    }
+    if (len < n.len) {
+        return false;
+    }
+    for (int i = 0; i < len; ++i) {
+        if (num[i] < n.num[i]) {
+            return false;
+        }
+        if (equal && num[i] > n.num[i]) {
+            equal = false;
+        }
+    }
+    return !equal;
+}
+
+bool BigNum::operator>(const int &n) {
+    BigNum t(n);
+    return (*this > t);
+}
+
+BigNum BigNum::operator-(const BigNum& n) {
+    
+}
+
+BigNum BigNum::operator*(const BigNum& n) {
+
+}
+
+BigNum BigNum::operator/(const BigNum& n) {
+
+}
+
+
 int main() {
     BigNum num1(1111335);
-    // num1.print();
+    num1.print();
 
-    // BigNum num2(-13555555);
-    // num2.print();
+    BigNum num2(1111335);
+    num2.print();
 
     BigNum num3("32948094535447054");
-    // num3.print();
+    num3.print();
 
     // BigNum num4("11r11111111555555");
     // num4.print();
-
-    BigNum num5 = BigNum(num1 + num3);
-    num5.print();
+    cout << endl;
+    cout << (num1 < 11111111) << endl;
+    cout << (num3 < 11111111) << endl;
+    // BigNum num5 = BigNum(num1 + num3);
+    // num5.print();
 }
