@@ -15,6 +15,7 @@ BigNum::BigNum(int n) {
         len = -1;
         return ;
     }
+    memset(num, 0, MAX_LEN);
     int base = 10;
     int i = 0;
     while (n) {
@@ -25,6 +26,7 @@ BigNum::BigNum(int n) {
 }
 
 BigNum::BigNum(const string n) {
+    memset(num, 0, MAX_LEN);
     int i = 0;
     for (int index = n.length() - 1; index >= 0; --index) {
         if (n[index] >= '0' && n[index] <= '9') {
@@ -182,6 +184,11 @@ BigNum BigNum::operator-(const BigNum& n) {
     return res;
 }
 
+BigNum BigNum::operator-(const int &n) {
+    BigNum t(n);
+    return *this - t;
+}
+
 BigNum BigNum::operator*(const BigNum& n) {
 
 }
@@ -190,25 +197,37 @@ BigNum BigNum::operator/(const BigNum& n) {
 
 }
 
+// 友元函数不是 BigNum 类的成员函数, 不要加类作用域限定符
+ostream& operator<<(ostream& output, const BigNum &n) {
+    for (int i = n.len - 1; i >= 0; --i) {
+        output << n.num[i];
+    }
+    return output;
+}
+
+istream& operator>>(istream& input, BigNum &n) {
+    string s;
+    input >> s;
+    int i = 0;
+    for (int index = s.length() - 1; index >= 0; --index) {
+        if (s[index] >= '0' && s[index] <= '9') {
+            n.num[i++] = s[index] - '0';
+        }
+        else {
+            cout << "Invalid string: cannot convert it into BigNum!" << endl;
+            n.len = -1;
+            return input;
+        }
+    }
+    n.len = i;
+    return input;
+}
 
 int main() {
-    BigNum num1(1111335);
-    num1.print();
-
-    // BigNum num2(1111335);
-    // num2.print();
-
-    BigNum num3(1111000);
-    num3.print();
-
-    // BigNum num4("11r11111111555555");
-    // num4.print();
-    cout << endl;
-    // cout << (num1 < 11111111) << endl;
-    // cout << (num3 < 11111111) << endl;
-    BigNum num5 = BigNum(num1 - num3);
-    BigNum num6 = BigNum(num3 - num1);
-    num5.print();
-    cout << endl;
-    num6.print();
+    BigNum num1;
+    cin >> num1;
+    // num1.print();
+    auto num2 = num1 - 12345;
+    cout << num2 << endl;
+    return 0;
 }
