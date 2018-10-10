@@ -61,18 +61,22 @@ BigNum BigNum::operator+(const BigNum& n){
     BigNum res = BigNum();
     for (; i < len && i < n.len; ++i) {
         int sum = num[i] + n.num[i] + carry;
-        int carry = sum / 10;
+        carry = sum / 10;
         res.num[i] = sum % 10;
     }
     for (; i < len; ++i) {
         int sum = num[i] + carry;
-        int carry = sum / 10;
+        carry = sum / 10;
         res.num[i] = sum % 10;
     }
     for (; i < n.len; ++i) {
         int sum = n.num[i] + carry;
-        int carry = sum / 10;
+        carry = sum / 10;
         res.num[i] = sum % 10;
+    }
+    if (carry) {
+        res.num[i] = 1;
+        i++;
     }
     res.len = i;
     return res;
@@ -190,7 +194,17 @@ BigNum BigNum::operator-(const int &n) {
 }
 
 BigNum BigNum::operator*(const BigNum& n) {
-
+    BigNum t(n);
+    cout << "t: " << t << endl;
+    BigNum res = BigNum(*this);
+    while (t > 1) {
+        cout << t << endl;
+        cout << "res: " << res << endl;
+        res = res + *this;
+        t = t - 1;
+    }
+    cout << "len: " << res.len << endl;
+    return res;
 }
 
 BigNum BigNum::operator/(const BigNum& n) {
@@ -226,8 +240,11 @@ istream& operator>>(istream& input, BigNum &n) {
 int main() {
     BigNum num1;
     cin >> num1;
+    BigNum num2;
+    cin >> num2;
     // num1.print();
-    auto num2 = num1 - 12345;
-    cout << num2 << endl;
+    // auto num3 = num1 * num2;
+    auto num3 = 50 + num1;
+    cout << num3 << endl;
     return 0;
 }
