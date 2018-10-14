@@ -6,10 +6,15 @@ using namespace std;
 
 BigNum::BigNum() {
     memset(num, 0, MAX_LEN);
-    len = 0;
+    len = 1;
 }
 
 BigNum::BigNum(int n) {
+    if (n == 0) {
+        memset(num, 0, MAX_LEN);
+        len = 1;
+        return ;
+    }
     if (n < 0) {
         cout << "Invalid number: BigNum can only be used to store non-negative integers!" << endl;
         len = -1;
@@ -23,9 +28,15 @@ BigNum::BigNum(int n) {
         n = n / base;
     }
     len = i;
+    cout << len << endl;
 }
 
 BigNum::BigNum(const string n) {
+    if (n == "0") {
+        memset(num, 0, MAX_LEN);
+        len = 1;
+        return ;
+    }
     memset(num, 0, MAX_LEN);
     int i = 0;
     for (int index = n.length() - 1; index >= 0; --index) {
@@ -50,9 +61,12 @@ void BigNum::print() {
         cout << "Length error: len cannot be negative!" << endl;
         return ;
     }
+
+    cout << "The length is " << len << ", and the number is ";
     for (int i = len - 1; i >= 0; --i) {
         cout << num[i];
     }
+    cout << endl;
 }
 
 BigNum BigNum::operator+(const BigNum& n){
@@ -87,7 +101,7 @@ BigNum BigNum::operator+(const int &n) {
     return *this + t;
 }
 
-bool BigNum::operator==(const BigNum& n) {
+bool BigNum::operator==(const BigNum& n) const {
     if (len != n.len) {
 	return false;
     }
@@ -99,7 +113,7 @@ bool BigNum::operator==(const BigNum& n) {
     return true;
 }
 
-bool BigNum::operator==(const int& n) {
+bool BigNum::operator==(const int& n) const {
     BigNum t(n);
     return (*this == t);
 }
@@ -197,7 +211,6 @@ BigNum BigNum::operator*(const BigNum& n) {
     BigNum t(n);
     BigNum res = BigNum(*this);
     while (t > 1) {
-        cout << t << endl;
         res = res + *this;
         t = t - 1;
     }
@@ -215,6 +228,44 @@ BigNum BigNum::operator*(const int &n) {
 }
 
 BigNum BigNum::operator/(const BigNum& n) {
+    if (n == 0) {
+        cout << "Error: divided by zero!" << endl;
+        return BigNum(-1);
+    }
+    if (*this < n) {
+        return BigNum(0);
+    }
+    if (*this == n) {
+        return BigNum(1);
+    }
+
+    BigNum quotient = BigNum();
+    BigNum divisor(n);
+    BigNum dividend(*this);
+
+    int multiple = 1;
+    while (divisor.len < MAX_LEN && (dividend > divisor || dividend == divisor)) {
+        divisor = divisor * 10;
+        multiple = multiple * 10;
+    }
+
+    while (multiple > 1) {
+        for (int i = 0; i < divisor.len - 1; ++i) {
+            divisor.num[i] = divisor.num[i + 1];
+        }
+        divisor.num[divisor.len - 1] = 0;
+        divisor.len = divisor.len - 1;
+        multiple = multiple / 10;
+        while (dividend == divisor || dividend > divisor) {
+            dividend = dividend - divisor;
+            quotient = quotient + multiple;
+        }
+    }
+    quotient.print();
+    return quotient;
+}
+
+BigNum BigNum::operator/(const int &n) {
 
 }
 
@@ -247,8 +298,9 @@ istream& operator>>(istream& input, BigNum &n) {
 int main() {
     BigNum num1;
     cin >> num1;
-    // num1.print();
-    auto num3 = num1 * 3;
+    BigNum num2;
+    cin >> num2;
+    auto num3 = num1 / num2;
     cout << num3 << endl;
     return 0;
 }

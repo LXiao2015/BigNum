@@ -10,8 +10,8 @@ public:
 
     virtual ~BigNum() {};
 
-    bool operator==(const BigNum& n);
-    bool operator==(const int &n);
+    bool operator==(const BigNum& n) const;
+    bool operator==(const int &n) const;
     bool operator>(const BigNum& n);
     bool operator>(const int &n);
     bool operator<(const BigNum& n);
@@ -24,6 +24,7 @@ public:
     BigNum operator*(const BigNum& n);
     BigNum operator*(const int &n);
     BigNum operator/(const BigNum& n);
+    BigNum operator/(const int &n);
 
     // 声明为类的友元函数, 这样就能不用创建对象而直接调用函数
     friend ostream& operator<<(ostream& output, const BigNum &n);
