@@ -261,12 +261,12 @@ BigNum BigNum::operator/(const BigNum& n) {
             quotient = quotient + multiple;
         }
     }
-    quotient.print();
     return quotient;
 }
 
 BigNum BigNum::operator/(const int &n) {
-
+    BigNum t(n);
+    return *this / t;
 }
 
 // 友元函数不是 BigNum 类的成员函数, 不要加类作用域限定符
@@ -298,9 +298,9 @@ istream& operator>>(istream& input, BigNum &n) {
 int main() {
     BigNum num1;
     cin >> num1;
-    BigNum num2;
-    cin >> num2;
-    auto num3 = num1 / num2;
+    // BigNum num2;
+    // cin >> num2;
+    auto num3 = num1 / 55;
     cout << num3 << endl;
     return 0;
 }
