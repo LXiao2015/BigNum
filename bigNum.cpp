@@ -28,7 +28,6 @@ BigNum::BigNum(int n) {
         n = n / base;
     }
     len = i;
-    cout << len << endl;
 }
 
 BigNum::BigNum(const string n) {
@@ -295,12 +294,37 @@ istream& operator>>(istream& input, BigNum &n) {
     return input;
 }
 
+template <typename T>
+void BigNum::operator+=(const T &n) {
+    *this = *this + n;
+}
+
+template <typename T>
+void BigNum::operator-=(const T& n) {
+    *this = *this - n;
+}
+
+template <typename T>
+void BigNum::operator*=(const T& n) {
+    *this = *this * n;
+}
+
+template <typename T>
+void BigNum::operator/=(const T& n) {
+    *this = *this / n;
+}
+
+
 int main() {
     BigNum num1;
     cin >> num1;
-    // BigNum num2;
-    // cin >> num2;
-    auto num3 = num1 / 55;
-    cout << num3 << endl;
+    num1 += 55;
+    cout << num1 << endl;
+    num1 -= 5;
+    cout << num1 << endl;
+    num1 *= 2;
+    cout << num1 << endl;
+    num1 /= 5;
+    cout << num1 << endl;
     return 0;
 }
