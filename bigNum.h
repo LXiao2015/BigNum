@@ -35,6 +35,11 @@ public:
     template <typename T>
     void operator/=(const T& n);
 
+    BigNum& operator++();
+    BigNum operator++(int);
+    BigNum& operator--();
+    BigNum operator--(int);
+
     // 声明为类的友元函数, 这样就能不用创建对象而直接调用函数
     friend ostream& operator<<(ostream& output, const BigNum &n);
     friend istream& operator>>(istream& input, BigNum &n);

@@ -314,17 +314,38 @@ void BigNum::operator/=(const T& n) {
     *this = *this / n;
 }
 
+BigNum& BigNum::operator++() {
+    *this = *this + 1;
+    return *this;
+}
+
+BigNum BigNum::operator++(int) {
+    BigNum tmp(*this);
+    *this = *this + 1;
+    return tmp;
+} 
+
+BigNum& BigNum::operator--() {
+    *this = *this - 1;
+    return *this;
+}
+
+BigNum BigNum::operator--(int) {
+    BigNum tmp(*this);
+    *this = *this - 1;
+    return tmp;
+}
 
 int main() {
     BigNum num1;
     cin >> num1;
-    num1 += 55;
+    num1++;
     cout << num1 << endl;
-    num1 -= 5;
+    ++num1;
     cout << num1 << endl;
-    num1 *= 2;
+    num1--;
     cout << num1 << endl;
-    num1 /= 5;
+    --num1;
     cout << num1 << endl;
     return 0;
 }
