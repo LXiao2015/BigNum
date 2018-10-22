@@ -24,7 +24,7 @@ public:
     BigNum operator*(const BigNum& n) const;
     BigNum operator*(const int &n) const;
     BigNum operator/(const BigNum& n) const;
-    BigNum operator/(const int &n);
+    BigNum operator/(const int &n) const;
 
     BigNum operator^(const BigNum &n) const;
     BigNum operator^(const int &n) const;

@@ -268,20 +268,43 @@ BigNum BigNum::operator/(const int &n) const {
     return *this / t;
 }
 
-BigNum operator^(const BigNum &n) const {
+BigNum BigNum::operator^(const BigNum &n) const {
+    if (n == 0) {
+        return 1;
+    }
+    if (n == 1) {
+        return *this;
+    }
 
+    bool odd = 0;
+    if (n % 2 == 1) {
+        odd = 1;
+    }
+
+    BigNum res;
+    BigNum half = (*this) ^ (n / 2);
+    res = half * half;
+
+    if (odd) {
+	res *= *this;
+    }
+
+    return res;
 }
 
-BigNum operator^(const int &n) const {
-
+BigNum BigNum::operator^(const int &n) const {
+    BigNum t(n);
+    return (*this) ^ t;
 }
 
-BigNum operator%(const BigNum &n) const {
-
+BigNum BigNum::operator%(const BigNum &n) const {
+    BigNum t = (*this) / n;
+    return *this - t * n;
 }
 
-BigNum operator%(const int &n) const {
-
+BigNum BigNum::operator%(const int &n) const {
+    BigNum t(n);
+    return (*this) % t;
 }
 
 
@@ -356,13 +379,11 @@ BigNum BigNum::operator--(int) {
 int main() {
     BigNum num1;
     cin >> num1;
-    num1++;
-    cout << num1 << endl;
-    ++num1;
-    cout << num1 << endl;
-    num1--;
-    cout << num1 << endl;
-    --num1;
-    cout << num1 << endl;
+    BigNum num2;
+    cin >> num2;
+    cout << (num1 ^ 5) << endl;
+    cout << (num1 ^ num2) << endl;
+    cout << (num1 % 5) << endl;
+    cout << (num1 % num2) << endl;
     return 0;
 }
