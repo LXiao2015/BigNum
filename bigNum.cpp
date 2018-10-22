@@ -68,7 +68,7 @@ void BigNum::print() {
     cout << endl;
 }
 
-BigNum BigNum::operator+(const BigNum& n){
+BigNum BigNum::operator+(const BigNum& n) const {
     int carry = 0;
     int i = 0;
     BigNum res = BigNum();
@@ -95,7 +95,7 @@ BigNum BigNum::operator+(const BigNum& n){
     return res;
 }
 
-BigNum BigNum::operator+(const int &n) {
+BigNum BigNum::operator+(const int &n) const {
     BigNum t(n);
     return *this + t;
 }
@@ -117,7 +117,7 @@ bool BigNum::operator==(const int& n) const {
     return (*this == t);
 }
 
-bool BigNum::operator<(const BigNum& n) {
+bool BigNum::operator<(const BigNum& n) const {
     bool equal = true;
     if (len < n.len) {
 	return true;
@@ -136,12 +136,12 @@ bool BigNum::operator<(const BigNum& n) {
     return !equal;
 }
 
-bool BigNum::operator<(const int &n) {
+bool BigNum::operator<(const int &n) const {
     BigNum t(n);
     return (*this < t);
 }
 
-bool BigNum::operator>(const BigNum& n) {
+bool BigNum::operator>(const BigNum& n) const {
     bool equal = true;
     if (len > n.len) {
         return true;
@@ -160,12 +160,12 @@ bool BigNum::operator>(const BigNum& n) {
     return !equal;
 }
 
-bool BigNum::operator>(const int &n) {
+bool BigNum::operator>(const int &n) const {
     BigNum t(n);
     return (*this > t);
 }
 
-BigNum BigNum::operator-(const BigNum& n) {
+BigNum BigNum::operator-(const BigNum& n) const {
     BigNum res = BigNum();
     if (*this < n) {
         cout << "Error: left operand is smaller than right operand!" << endl;
@@ -201,12 +201,12 @@ BigNum BigNum::operator-(const BigNum& n) {
     return res;
 }
 
-BigNum BigNum::operator-(const int &n) {
+BigNum BigNum::operator-(const int &n) const {
     BigNum t(n);
     return *this - t;
 }
 
-BigNum BigNum::operator*(const BigNum& n) {
+BigNum BigNum::operator*(const BigNum& n) const {
     BigNum t(n);
     BigNum res = BigNum(*this);
     while (t > 1) {
@@ -216,7 +216,7 @@ BigNum BigNum::operator*(const BigNum& n) {
     return res;
 }
 
-BigNum BigNum::operator*(const int &n) {
+BigNum BigNum::operator*(const int &n) const {
     int t = n;
     BigNum res = BigNum(*this);
     while (t > 1) {
@@ -226,7 +226,7 @@ BigNum BigNum::operator*(const int &n) {
     return res;
 }
 
-BigNum BigNum::operator/(const BigNum& n) {
+BigNum BigNum::operator/(const BigNum& n) const {
     if (n == 0) {
         cout << "Error: divided by zero!" << endl;
         return BigNum(-1);
@@ -263,10 +263,27 @@ BigNum BigNum::operator/(const BigNum& n) {
     return quotient;
 }
 
-BigNum BigNum::operator/(const int &n) {
+BigNum BigNum::operator/(const int &n) const {
     BigNum t(n);
     return *this / t;
 }
+
+BigNum operator^(const BigNum &n) const {
+
+}
+
+BigNum operator^(const int &n) const {
+
+}
+
+BigNum operator%(const BigNum &n) const {
+
+}
+
+BigNum operator%(const int &n) const {
+
+}
+
 
 // 友元函数不是 BigNum 类的成员函数, 不要加类作用域限定符
 ostream& operator<<(ostream& output, const BigNum &n) {

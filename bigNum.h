@@ -12,19 +12,24 @@ public:
 
     bool operator==(const BigNum& n) const;
     bool operator==(const int &n) const;
-    bool operator>(const BigNum& n);
-    bool operator>(const int &n);
-    bool operator<(const BigNum& n);
-    bool operator<(const int &n);
+    bool operator>(const BigNum& n) const;
+    bool operator>(const int &n) const;
+    bool operator<(const BigNum& n) const;
+    bool operator<(const int &n) const;
 
-    BigNum operator+(const BigNum& n);
-    BigNum operator+(const int &n);
-    BigNum operator-(const BigNum& n);
-    BigNum operator-(const int &n);
-    BigNum operator*(const BigNum& n);
-    BigNum operator*(const int &n);
-    BigNum operator/(const BigNum& n);
+    BigNum operator+(const BigNum& n) const;
+    BigNum operator+(const int &n) const;
+    BigNum operator-(const BigNum& n) const;
+    BigNum operator-(const int &n) const;
+    BigNum operator*(const BigNum& n) const;
+    BigNum operator*(const int &n) const;
+    BigNum operator/(const BigNum& n) const;
     BigNum operator/(const int &n);
+
+    BigNum operator^(const BigNum &n) const;
+    BigNum operator^(const int &n) const;
+    BigNum operator%(const BigNum &n) const;
+    BigNum operator%(const int &n) const;
 
     template <typename T>
     void operator+=(const T &n);
