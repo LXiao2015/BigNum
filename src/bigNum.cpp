@@ -375,15 +375,3 @@ BigNum BigNum::operator--(int) {
     *this = *this - 1;
     return tmp;
 }
-
-int main() {
-    BigNum num1;
-    cin >> num1;
-    BigNum num2;
-    cin >> num2;
-    cout << (num1 ^ 5) << endl;
-    cout << (num1 ^ num2) << endl;
-    cout << (num1 % 5) << endl;
-    cout << (num1 % num2) << endl;
-    return 0;
-}
